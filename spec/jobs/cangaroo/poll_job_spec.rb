@@ -56,7 +56,8 @@ RSpec.describe Cangaroo::PollJob, type: :job do
       end
 
       it 'updates the poll timestamp' do
-        Cangaroo::Webhook::Client.any_instance.stub(:post).and_return(successful_pull_payload)
+        # Cangaroo::Webhook::Client.any_instance.stub(:post).and_return(successful_pull_payload)
+        allow_any_instance_of(Cangaroo::Webhook::Client).to receive(:post).and_return(successful_pull_payload)
 
         job.perform
 
@@ -67,13 +68,15 @@ RSpec.describe Cangaroo::PollJob, type: :job do
       end
 
       it 'handles a empty response' do
-        Cangaroo::Webhook::Client.any_instance.stub(:post).and_return('')
+        # Cangaroo::Webhook::Client.any_instance.stub(:post).and_return('')
+        expect_any_instance_of(Cangaroo::Webhook::Client).to receive(:post).and_return('')
 
         job.perform
       end
 
       it 'handles a response with a empty array' do
-        Cangaroo::Webhook::Client.any_instance.stub(:post).and_return(
+        # Cangaroo::Webhook::Client.any_instance.stub(:post).and_return(
+        expect_any_instance_of(Cangaroo::Webhook::Client).to receive(:post).and_return(
           parse_fixture('json_payload_empty.json')
         )
 
@@ -83,7 +86,7 @@ RSpec.describe Cangaroo::PollJob, type: :job do
 
     context 'pull fails' do
       before do
-        Cangaroo::Webhook::Client.any_instance.stub(:post).and_return(parse_fixture('json_payload_ok.json'))
+        allow_any_instance_of(Cangaroo::Webhook::Client).to receive(:post).and_return(parse_fixture('json_payload_ok.json'))
 
         allow(Cangaroo::PerformFlow).to receive(:call).and_return(double(success?: false,
                                                                          message: 'bad failure'))

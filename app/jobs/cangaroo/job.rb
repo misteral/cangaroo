@@ -19,5 +19,9 @@ module Cangaroo
     def payload
       arguments.first.fetch(:payload)
     end
+
+    def vendor
+      arguments.first.fetch(:vendor, nil)
+    end
   end
 end

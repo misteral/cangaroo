@@ -29,7 +29,10 @@ module Cangaroo
     end
 
     def destination_connection
-      @destination_connection ||= Cangaroo::Connection.find_by!(name: connection)
+      return @destination_connection if @destination_connection
+      return @destination_connection = Cangaroo::Connection.find_by!(name: connection) unless vendor
+
+      @destination_connection = Cangaroo::Connection.find_by!(name: "#{connection}_#{vendor}")
     end
   end
 end
