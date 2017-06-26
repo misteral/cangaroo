@@ -1,5 +1,6 @@
 module Cangaroo
   class PerformJobs
+    include Cangaroo::Log
     include Interactor
 
     def call
@@ -11,7 +12,14 @@ module Cangaroo
     private
 
     def enqueue_jobs(type, payload)
-      initialize_jobs(type, payload).select(&:perform?).each(&:enqueue)
+      initialize_jobs(type, payload).each do |job|
+        if job.perform?
+          log.info 'Enqueue job:', enqueued_job: job.class.to_s
+          job.enqueue
+        else
+          log.info 'Skip job:', skipped_job: job.class.to_s
+        end
+      end
     end
 
     def initialize_jobs(type, payload)
