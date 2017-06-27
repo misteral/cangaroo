@@ -20,13 +20,17 @@ RSpec.describe 'Push with vendor' do
       'X-Hub-Access-Token' => store.token }
   }
 
+  # let!(:update_order_store_api) {
+  #   stub_api(job: Cangaroo::StoreJob, request_body: { order: { id: payed_order['id'], state: anything } })
+  # }
+
   before do
     Rails.configuration.cangaroo.jobs = [FakePushJobb]
   end
 
   it 'destination connection with vendor' do
     expect(Cangaroo::Webhook::Client).to receive(:new)
-      .with(test_connection_with_vendor, '/webhook_path')
+      .with(test_connection_with_vendor, '/webhook_path').ordered
 
     post endpoint_index_path, params: vendor_payload, headers: headers
   end
