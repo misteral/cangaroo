@@ -35,6 +35,10 @@ module Cangaroo
       @destination_connection = Cangaroo::Connection.find_by!(name: "#{connection}_#{vendor}")
     end
 
+    rescue_from('Interactor::Failure') do |exception|
+      p "Supressed Interactor::Failure: #{exception.message}"
+    end
+
     rescue_from(StandardError) do |exception|
       Cangaroo.logger.error 'Exception in Cangaroo',
                             message: exception.message,
