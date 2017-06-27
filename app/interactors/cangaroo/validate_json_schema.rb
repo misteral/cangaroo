@@ -21,12 +21,15 @@ module Cangaroo
     before :prepare_context
 
     def call
-      validation_response = JSON::Validator.fully_validate(SCHEMA, context.json_body.to_json)
+      validation_response = JSON::Validator
+                            .fully_validate(SCHEMA, context.json_body.to_json)
 
       if validation_response.empty?
         return true
       end
 
+      Cangaroo.logger.debug 'Cangaroo Validation JSON failed',
+                            response: validation_response.join(', ')
       context.fail!(message: validation_response.join(', '), error_code: 500)
     end
 
