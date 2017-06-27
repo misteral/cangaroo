@@ -25,7 +25,8 @@ module Cangaroo
         jobs: Rails.configuration.cangaroo.jobs.reject{ |job| job == self.class }
       )
 
-      fail Cangaroo::Webhook::Error, command.message unless command.success?
+      binding.pry
+      # fail Cangaroo::Webhook::Error, command.message unless command.success?
     end
 
     def destination_connection
