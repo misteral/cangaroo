@@ -23,6 +23,10 @@ module Cangaroo
       end
       Cangaroo.logger.info 'Enqueu jobs:', enqueued_jobs: enqueued_jobs,
                                            skipped_jobs: skipped_jobs
+
+      # Cangaroo.logger.info 'Enqueu jobs:', enqueued_jobs: enqueued_jobs,
+      #                                      skipped_jobs: skipped_jobs,
+      #                                      payload: payload
     end
 
     def initialize_jobs(type, payload)
