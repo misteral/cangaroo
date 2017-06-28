@@ -32,8 +32,6 @@ module Cangaroo
 
     let(:fake_command) { double('fake perform flow command', success?: true) }
 
-    # let(:job) { job_class.new(options) }
-
     before do
       allow(client).to receive(:post).and_return(connection_response)
       allow(Cangaroo::Webhook::Client).to receive(:new).and_return(client)
@@ -41,8 +39,9 @@ module Cangaroo
     end
 
     describe '#transform' do
-      it 'raise error' do
-        expect { FakePushJobb.perform_now(options) }.to raise_error(StandardError)
+      it 'log error if error' do
+        expect(Cangaroo.logger).to receive(:error)
+        FakePushJobb.perform_now(options)
       end
     end
   end
