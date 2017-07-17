@@ -19,14 +19,11 @@ module Cangaroo
 
       return unless process_response
 
-      command = PerformFlow.call(
+      PerformFlow.call(
         source_connection: destination_connection,
         json_body: response,
         jobs: Rails.configuration.cangaroo.jobs.reject{ |job| job == self.class }
       )
-
-      # binding.pry
-      # fail Cangaroo::Webhook::Error, command.message unless command.success?
     end
 
     def destination_connection
@@ -45,7 +42,6 @@ module Cangaroo
                             backtrace: exception.backtrace,
                             type: current_type,
                             payload: current_payload
-      # context.fail!(message: exception.message, error_code: 500)
     end
   end
 end

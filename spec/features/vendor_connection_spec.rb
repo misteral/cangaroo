@@ -5,7 +5,7 @@ RSpec.describe 'Push with vendor' do
     connection :test
     path '/webhook_path'
     def perform?
-      type == 'orders'
+      type == 'orders' && payload['state'] == 'payed'
     end
   end
 
@@ -19,10 +19,6 @@ RSpec.describe 'Push with vendor' do
       'X-Hub-Store' => store.key,
       'X-Hub-Access-Token' => store.token }
   }
-
-  # let!(:update_order_store_api) {
-  #   stub_api(job: Cangaroo::StoreJob, request_body: { order: { id: payed_order['id'], state: anything } })
-  # }
 
   before do
     Rails.configuration.cangaroo.jobs = [FakePushJobb]
