@@ -23,5 +23,9 @@ module Cangaroo
     def vendor
       arguments.first.fetch(:vendor, nil)
     end
+
+    def sync_type
+      arguments.first.fetch(:sync_type, nil)
+    end
   end
 end

@@ -34,14 +34,14 @@ module Cangaroo
     end
 
     rescue_from(StandardError) do |exception|
-      current_type = type || ''
-      current_payload = payload || ''
       Cangaroo.logger.error 'Exception in Cangaroo',
                             message: exception.message,
                             cause: exception.cause,
                             backtrace: exception.backtrace,
-                            type: current_type,
-                            payload: current_payload
+                            type: type || '',
+                            payload: payload || '',
+                            vendor: vendor || '',
+                            sync_type: sync_type || ''
     end
   end
 end
