@@ -41,7 +41,8 @@ module Cangaroo
                             type: type || '',
                             payload: payload || '',
                             vendor: vendor || '',
-                            sync_type: sync_type || ''
+                            sync_type: sync_type || '',
+                            sync_action: sync_action || ''
     end
   end
 end

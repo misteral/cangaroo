@@ -27,5 +27,9 @@ module Cangaroo
     def sync_type
       arguments.first.fetch(:sync_type, nil)
     end
+
+    def sync_action
+      arguments.first.fetch(:sync_action, nil)
+    end
   end
 end

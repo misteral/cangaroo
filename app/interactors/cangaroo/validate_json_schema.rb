@@ -38,6 +38,7 @@ module Cangaroo
     def prepare_context
       context.vendor = context.json_body.delete('vendor')
       context.sync_type = context.json_body.delete('sync_type')
+      context.sync_action = context.json_body.delete('sync_action')
       context.request_id = context.json_body.delete('request_id')
       context.summary = context.json_body.delete('summary')
       context.parameters = context.json_body.delete('parameters')
